@@ -4,6 +4,8 @@ import android.support.annotation.IdRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.why.base.enums.BaseUI;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -11,7 +13,7 @@ import butterknife.Unbinder;
  * Created by wuhongyun on 17-7-17.
  * 为了方便扩展使之继承了recyclerview的holder
  */
-
+@BaseUI
 public class BaseHolder extends RecyclerView.ViewHolder {
 
     private final Unbinder unbinder;

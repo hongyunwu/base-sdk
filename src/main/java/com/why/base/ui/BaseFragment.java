@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.leakcanary.RefWatcher;
+import com.why.base.cache.AppCache;
+import com.why.base.enums.BaseUI;
 import com.why.base.event.BaseEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -19,7 +22,7 @@ import java.lang.reflect.ParameterizedType;
 /**
  * Created by wuhongyun on 17-7-17.
  */
-
+@BaseUI
 public abstract class BaseFragment<T extends BaseHolder> extends Fragment {
 
     protected T viewHolder;
@@ -57,6 +60,10 @@ public abstract class BaseFragment<T extends BaseHolder> extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         //不要unbindview
+        //检测内存泄露问题
+        RefWatcher refWatcher = AppCache.getRefWatcher();
+        if (refWatcher!=null)
+            refWatcher.watch(this);
     }
 
     @Override

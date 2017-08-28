@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.why.base.enums.BaseUI;
 import com.why.base.event.BaseEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -21,7 +22,7 @@ import java.lang.reflect.ParameterizedType;
 /**
  * Created by wuhongyun on 17-7-17.
  */
-
+@BaseUI
 public abstract class BaseActivity<T extends BaseHolder> extends AppCompatActivity {
 
 

@@ -281,7 +281,7 @@ public class ImageUtils {
 
     /**
      * drawable转换为bitmap
-     * 
+     *
      * @param drawable
      * @return
      */
