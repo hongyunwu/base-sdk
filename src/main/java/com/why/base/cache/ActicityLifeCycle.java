@@ -14,15 +14,16 @@ import com.why.base.utils.LogUtils;
  */
 
 class ActicityLifeCycle implements Application.ActivityLifecycleCallbacks {
-    private RefWatcher mRefWatcher;
 
-    public ActicityLifeCycle(RefWatcher refWatcher) {
-        this.mRefWatcher = refWatcher;
+    private AppCache mAppCache;
+
+    public ActicityLifeCycle(AppCache appCache) {
+        this.mAppCache = appCache;
     }
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
+        mAppCache.pushActivity(activity);
     }
 
     @Override
@@ -52,9 +53,11 @@ class ActicityLifeCycle implements Application.ActivityLifecycleCallbacks {
 
     @Override
     public void onActivityDestroyed(Activity activity) {
+        RefWatcher mRefWatcher = mAppCache.getRefWatcher();
         if (mRefWatcher!=null){
             mRefWatcher.watch(activity);
         }
+        mAppCache.popActivity(activity);
         LogUtils.i("onActivityDestroyed: " + activity.getClass().getSimpleName());
     }
 }

@@ -1,25 +1,29 @@
 package com.why.base.cache;
 
+import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
+import java.util.ArrayList;
+
 /**
  * Created by wuhongyun on 17-8-28.
- * 用于应用的全局缓存,全局缓存信息：1.用户登陆信息，2.activity栈信息，3.
+ * 用于应用的全局缓存,全局缓存信息：1.用户登陆信息，2.activity栈信息，3.异常全局捕捉
  */
 
 public class AppCache {
-    private Context mContext;
+    private Application mApplication;
     private RefWatcher mRefWatcher;
+    private ActicityLifeCycle mActicityLifeCycle;
 
     /**
      * 私有化构造函数
      */
     private AppCache(){
     }
+
 
     private static class SingleCacheHolder{
         private static AppCache mAppCache = new AppCache();
@@ -36,15 +40,16 @@ public class AppCache {
     public static void init(Application application){
         getInstance().onInit(application);
     }
-    
+
     /**
      * 初始化操作
      * @param application
      */
     private void onInit(Application application) {
-        mContext = application.getApplicationContext();
+        this.mApplication = application;
         initLeakCanary(application);
-        application.registerActivityLifecycleCallbacks(new ActicityLifeCycle(getRefWatcher()));
+        mActicityLifeCycle = new ActicityLifeCycle(this);
+        application.registerActivityLifecycleCallbacks(mActicityLifeCycle);
     }
 
     /**
@@ -67,5 +72,57 @@ public class AppCache {
         }
         mRefWatcher = LeakCanary.install(application);
     }
+
+
+    private ArrayList<Activity> activities = new ArrayList<>();
+    /**
+     * 把activity加入堆栈集合中，方便统一退出
+     * @param activity
+     */
+    synchronized void pushActivity(Activity activity) {
+
+        if (!activities.contains(activity)){
+            activities.add(activity);
+        }
+
+    }
+
+    /**
+     * activity从堆栈集合中弹出
+     * @param activity
+     */
+    synchronized void popActivity(Activity activity) {
+        if (activities.contains(activity)){
+            activities.remove(activity);
+        }
+    }
+
+    /**
+     * 退出app,安全退出
+     */
+    synchronized void exit(){
+        for (Activity activity : activities){
+            if (!activity.isFinishing()){
+                activity.finish();
+            }
+        }
+        activities.clear();
+        if (mApplication!=null){
+            mApplication.unregisterActivityLifecycleCallbacks(mActicityLifeCycle);
+        }
+
+        android.os.Process.killProcess(android.os.Process.myPid());
+
+        System.exit(1);
+
+    }
+
+    /**
+     * 静态调用退出应用程序
+     */
+    public static void exitApp(){
+        getInstance().exit();
+    }
+
 
 }
