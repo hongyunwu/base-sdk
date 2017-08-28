@@ -7,7 +7,7 @@ import android.os.Environment;
 import android.support.annotation.DrawableRes;
 import android.support.v4.util.LruCache;
 
-import com.why.base.disklrucache.DiskLruCache;
+import com.why.base.cache.disklrucache.DiskLruCache;
 import com.why.base.utils.AppUtils;
 import com.why.base.utils.ImageUtils;
 import com.why.base.utils.LogUtils;
@@ -96,7 +96,11 @@ public class ImageCache {
         return new File(cachePath+File.separator+uniqueName);
     }
 
-
+    /**
+     * 获取缓存的图片
+     * @param key
+     * @return
+     */
     public static Bitmap getCache(@DrawableRes int key){
         return getInstance().get(key);
     }
@@ -113,6 +117,21 @@ public class ImageCache {
         }
 
         return bitmap;
+    }
+
+    /**
+     * 把需要重复使用的图片放在缓存中
+     * @param key
+     * @param bitmap
+     */
+    public static void putCache(@DrawableRes int key,Bitmap bitmap){
+
+        getInstance().put(key,bitmap);
+    }
+
+    private void put(@DrawableRes int key, Bitmap bitmap) {
+
+        mMemoryCache.put(key,bitmap);
     }
 
 }

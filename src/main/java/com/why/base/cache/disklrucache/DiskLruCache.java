@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.why.base.disklrucache;
+package com.why.base.cache.disklrucache;
 
 import java.io.BufferedWriter;
 import java.io.Closeable;
