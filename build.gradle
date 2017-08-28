@@ -1,55 +1,23 @@
-apply plugin: 'com.android.library'
-apply plugin: 'com.jakewharton.butterknife'
-android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-    defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+buildscript {
+    repositories {
+        jcenter()
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.3.0'
-    compile 'com.android.support:recyclerview-v7:25.3.0'
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
 
-    /**
-     * 用于生成findviewbyid
-     */
-    compile 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-
-    /**
-     * 注解-用于辅助代码可读性
-     */
-    compile 'com.android.support:support-annotations:25.3.0'
-
-    /**
-     * 日志打印类
-     */
-    compile 'com.orhanobut:logger:2.1.1'
-
-    /**
-     * 用于传递事件，处理事件
-     */
-    compile 'org.greenrobot:eventbus:3.0.0'
-
-    /**
-     * 用于内存泄露检测
-     */
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.2'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.2'
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
