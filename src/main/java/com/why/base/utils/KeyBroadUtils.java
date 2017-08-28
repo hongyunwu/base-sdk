@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.why.base.enums.BaseUtil;
+
 /**
  * Created by wuhongyun@autoio.cn on 2017/5/25.
  */
-
+@BaseUtil
 public class KeyBroadUtils {
 	private KeyBroadUtils(){
 		throw new UnsupportedOperationException("cannot be instantiated");

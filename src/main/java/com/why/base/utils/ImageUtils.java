@@ -11,9 +11,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 
+import com.why.base.enums.BaseUtil;
+
 /**
  * 用于转换图像，处理图像变换
  */
+@BaseUtil
 public class ImageUtils {
     public static final int BLUR_RADIUS = 50;
 

@@ -30,6 +30,8 @@ public abstract class BaseActivity<T extends BaseHolder> extends AppCompatActivi
     protected T viewHolder;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        //处理窗口的全屏，标题栏，状态栏等属性
+
         super.onCreate(savedInstanceState);
         View view = View.inflate(this, getLayoutID(), null);
         setContentView(view);

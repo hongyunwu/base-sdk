@@ -2,6 +2,7 @@ package com.why.base.cache;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -101,6 +102,7 @@ public class AppCache {
      * 退出app,安全退出
      */
     synchronized void exit(){
+
         for (Activity activity : activities){
             if (!activity.isFinishing()){
                 activity.finish();
@@ -124,5 +126,13 @@ public class AppCache {
         getInstance().exit();
     }
 
+    /**
+     * 返回的是applicationContext对象
+     * @return
+     */
+    public static Context getContext(){
+
+        return getInstance().mApplication.getApplicationContext();
+    }
 
 }

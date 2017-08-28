@@ -8,10 +8,12 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.why.base.enums.BaseUtil;
+
 /**
  * Created by wuhongyun@autoio.cn on 2017/5/25.
  */
-
+@BaseUtil
 public class ScreenUtils {
 	private ScreenUtils()
 	{

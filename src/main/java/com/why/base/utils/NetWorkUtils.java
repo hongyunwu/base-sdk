@@ -4,10 +4,12 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.why.base.enums.BaseUtil;
+
 /**
  * Created by wuhongyun@autoio.cn on 2017/5/25.
  */
-
+@BaseUtil
 public class NetWorkUtils {
 
 	private NetWorkUtils() {

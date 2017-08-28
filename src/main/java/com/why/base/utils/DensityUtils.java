@@ -3,10 +3,12 @@ package com.why.base.utils;
 import android.content.Context;
 import android.util.TypedValue;
 
+import com.why.base.enums.BaseUI;
+
 /**
  * Created by wuhongyun@autoio.cn on 2017/5/25.
  */
-
+@BaseUI
 public class DensityUtils {
 
     private DensityUtils()

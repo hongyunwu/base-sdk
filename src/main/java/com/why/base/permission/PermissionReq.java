@@ -15,7 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Android运行时权限申请
+ * Android运行时权限申请,使用指南：
+ * 1.
+ * PermissionReq.with(this).permissions(str).request(callback)
+ * 2.
+ * 在Activity的onRequestPermissionsResult方法中重写
+ * PermissionReq.onRequestPermissionsResult(...)
+ *
  * <p>
  * 需要申请的权限列表，<a "href=https://developer.android.google.cn/guide/topics/security/permissions.html?hl=zh-cn#normal-dangerous">Google Doc</a>
  * <p>

@@ -3,11 +3,13 @@ package com.why.base.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.why.base.enums.BaseUtil;
+
 /**
  * Created by wuhongyun on 17-7-18.
  * 可以不使用TAG的日志打印类，默认TAG为当前类名,
  */
-
+@BaseUtil
 public class LogUtils {
 
     public static final boolean SHOW_STACK_TRACE = false;
