@@ -17,7 +17,7 @@ import butterknife.Unbinder;
 public class BaseHolder extends RecyclerView.ViewHolder {
 
     private final Unbinder unbinder;
-
+//    private SparseArray<View> mViews;
     /**
      * 此处使用butterKnife进行了view绑定操作
      * @param itemView
@@ -26,6 +26,8 @@ public class BaseHolder extends RecyclerView.ViewHolder {
         super(itemView);
         unbinder = ButterKnife.bind(this, itemView);
 
+        //考虑到用法的兼容性，可以在此使用集合装载
+//        mViews = new SparseArray<>();
     }
 
     /**
@@ -35,6 +37,9 @@ public class BaseHolder extends RecyclerView.ViewHolder {
         if (unbinder!=null){
             unbinder.unbind();
         }
+//        if (mViews!=null&&mViews.size()>0){
+//            mViews.clear();
+//        }
     }
 
     /**
@@ -84,4 +89,13 @@ public class BaseHolder extends RecyclerView.ViewHolder {
 
 
     }
+
+    /**
+     * 获取此viewholder的itemview
+     * @return itemView
+     */
+    public View getConvertView(){
+        return itemView;
+    }
+
 }
