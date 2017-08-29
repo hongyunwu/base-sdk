@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Created by wuhongyun on 17-8-29.
- *  加载更多需要考虑1,下拉到底部自动加载 2,点击加载 3,没有更多数据时去掉加载更多的view
+ *  TODO 加载更多需要考虑1,下拉到底部自动加载 2,点击加载 3,没有更多数据时去掉加载更多的view
  */
 
 public abstract class LoadMoreAdapter<T> extends RecyclerView.Adapter<BaseHolder> {

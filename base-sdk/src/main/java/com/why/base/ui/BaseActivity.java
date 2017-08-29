@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.View;
 
 import com.why.base.enums.BaseUI;
 import com.why.base.event.BaseEvent;
+import com.why.base.permission.PermissionReq;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -153,5 +155,53 @@ public abstract class BaseActivity<T extends BaseHolder> extends AppCompatActivi
         }
         Log.i("MainActivity","ondestroy...");
         EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * 增加权限申请回调
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionReq.onRequestPermissionsResult(requestCode,permissions,grantResults);
+
+    }
+
+    /**
+     * 调起activity页面
+     * @param clazz
+     * @param finishSelf
+     */
+    public void gotoSubActivity(Class<? extends BaseActivity> clazz,boolean finishSelf){
+        Intent intent = new Intent(this, clazz);
+        startActivity(intent);
+        if (finishSelf){
+            finish();
+        }
+    }
+
+    public void gotoSubActivity(Class<? extends BaseActivity> clazz,Bundle bundle,boolean finishSelf){
+
+        Intent intent = new Intent(this, clazz);
+        if (bundle!=null)intent.putExtras(bundle);
+        startActivity(intent);
+        if (finishSelf){
+            finish();
+        }
+
+    }
+
+    public void gotoSubActivity(Class<? extends BaseActivity> clazz,Bundle bundle,int flags,boolean finishSelf){
+        Intent intent = new Intent(this, clazz);
+        if (bundle!=null)intent.putExtras(bundle);
+        intent.addFlags(flags);
+        startActivity(intent);
+        if (finishSelf){
+            finish();
+        }
+
     }
 }
