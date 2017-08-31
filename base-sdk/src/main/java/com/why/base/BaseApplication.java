@@ -3,6 +3,7 @@ package com.why.base;
 import android.app.Application;
 
 import com.why.base.cache.AppCache;
+import com.why.base.utils.LogUtils;
 
 /**
  * Created by wuhongyun on 17-8-28.
@@ -14,6 +15,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         AppCache.init(this);
+        LogUtils.i("onCreate...");
 
     }
 }

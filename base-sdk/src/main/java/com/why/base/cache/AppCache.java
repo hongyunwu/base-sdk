@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.why.base.executor.ThreadManager;
 
 import java.util.ArrayList;
 
@@ -116,7 +117,8 @@ public class AppCache {
         }
 
         android.os.Process.killProcess(android.os.Process.myPid());
-
+        //线程管理类关闭线程
+        ThreadManager.getInstance().getDefaultPool().shutDownNow();
         System.exit(1);
 
     }
