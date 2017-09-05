@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *
  */
 
-public class BaseImpl<Service> {
+public class BaseImpl<Service extends BaseSerVice> {
 
 	private static Retrofit mRetrofit;
 	protected Service mService;
