@@ -20,11 +20,14 @@ public class AppCache {
     private RefWatcher mRefWatcher;
     private ActicityLifeCycle mActicityLifeCycle;
 
+
     /**
      * 私有化构造函数
      */
     private AppCache(){
     }
+
+
 
 
     private static class SingleCacheHolder{
@@ -139,4 +142,28 @@ public class AppCache {
         return getInstance().mApplication.getApplicationContext();
     }
 
+    /**
+     * 网络请求的baseurl
+     */
+    private String mBaseUrl;
+
+    /**
+     * 获取网络请求的baseUrl,
+     * @return
+     */
+    public static String getBaseUrl() {
+
+
+        return getInstance().mBaseUrl;
+    }
+
+    /**
+     * 设置网络请求url
+     *
+     * @param baseUrl
+     */
+    public static void setBaseUrl(String baseUrl){
+
+        getInstance().mBaseUrl = baseUrl;
+    }
 }

@@ -1,5 +1,6 @@
 package com.why.base.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -125,6 +126,39 @@ public abstract class BaseFragment<T extends BaseHolder> extends Fragment {
         PermissionReq.onRequestPermissionsResult(requestCode,permissions,grantResults);
     }
 
+    /**
+     * 调起activity页面
+     * @param clazz
+     * @param finishSelf
+     */
+    public void gotoSubActivity(Class<? extends BaseActivity> clazz,boolean finishSelf){
+        Intent intent = new Intent(getContext(), clazz);
+        startActivity(intent);
+        if (finishSelf){
+            getActivity().finish();
+        }
+    }
 
+    public void gotoSubActivity(Class<? extends BaseActivity> clazz,Bundle bundle,boolean finishSelf){
+
+        Intent intent = new Intent(getContext(), clazz);
+        if (bundle!=null)intent.putExtras(bundle);
+        startActivity(intent);
+        if (finishSelf){
+            getActivity().finish();
+        }
+
+    }
+
+    public void gotoSubActivity(Class<? extends BaseActivity> clazz,Bundle bundle,int flags,boolean finishSelf){
+        Intent intent = new Intent(getContext(), clazz);
+        if (bundle!=null)intent.putExtras(bundle);
+        intent.addFlags(flags);
+        startActivity(intent);
+        if (finishSelf){
+            getActivity().finish();
+        }
+
+    }
 
 }
