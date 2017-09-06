@@ -14,7 +14,11 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AppCache.init(this);
+        //判断是否是
+        //if (AppUtils.isUIProcess(getApplicationContext())){
+            AppCache.init(this);
+        //}
+
         LogUtils.i("onCreate...");
 
     }

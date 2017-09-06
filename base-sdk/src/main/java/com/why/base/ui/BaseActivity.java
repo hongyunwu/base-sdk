@@ -1,6 +1,8 @@
 package com.why.base.ui;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -30,6 +32,7 @@ public abstract class BaseActivity<T extends BaseHolder> extends AppCompatActivi
 
     protected Handler mHandler = new Handler(Looper.getMainLooper());
     protected T viewHolder;
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         //处理窗口的全屏，标题栏，状态栏等属性
@@ -37,6 +40,7 @@ public abstract class BaseActivity<T extends BaseHolder> extends AppCompatActivi
         super.onCreate(savedInstanceState);
         View view = View.inflate(this, getLayoutID(), null);
         setContentView(view);
+        IMMLeaks.fixFocusedViewLeak(getApplication());
         EventBus.getDefault().register(this);
         viewHolder = generateViewHolder(view);
         /*if (savedInstanceState!=null)

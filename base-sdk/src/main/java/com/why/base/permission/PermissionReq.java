@@ -20,7 +20,9 @@ import java.util.List;
  * PermissionReq.with(this).permissions(str).request(callback)
  * 2.
  * 在Activity的onRequestPermissionsResult方法中重写
- * PermissionReq.onRequestPermissionsResult(...)
+ * PermissionReq.onRequestPermissionsResult(...),
+ *
+ * 如果你的activity继承自BaseActivity，那么第二步已经帮你做好了
  *
  * <p>
  * 需要申请的权限列表，<a "href=https://developer.android.google.cn/guide/topics/security/permissions.html?hl=zh-cn#normal-dangerous">Google Doc</a>

@@ -1,8 +1,10 @@
 package com.why.base.utils;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Process;
 
 import com.why.base.enums.BaseUtil;
 
@@ -79,6 +81,27 @@ public class AppUtils {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	/**
+	 * 判断当前进程是否是主进程 - processName==packageName
+	 *
+	 * @param context 需要进行判断的上下文环境
+	 * @return processName.equals(packageName)
+	 */
+	public static boolean isUIProcess(Context context){
+		int myPid = Process.myPid();
+		ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+		String mProcessName = "";
+		for (ActivityManager.RunningAppProcessInfo processInfo : activityManager.getRunningAppProcesses()){
+			if (processInfo.pid ==myPid){
+
+				mProcessName = processInfo.processName;
+				break;
+			}
+		}
+
+		return mProcessName.equals(context.getPackageName());
 	}
 
 
