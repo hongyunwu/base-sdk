@@ -37,13 +37,18 @@ public abstract class BaseFragment<T extends BaseHolder> extends Fragment {
         //保证多次执行onCreateView时布局view引用都相同
         if (contentView==null){
             contentView = inflater.inflate(getLayoutID(),null);
+            try {
+                
+                viewHolder = generateViewHolder(contentView);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
-            viewHolder = generateViewHolder(contentView);
-
+            initData();
         }
         EventBus.getDefault().register(this);
         Log.i("BaseFragment",getClass().getSimpleName()+" onCreateView()...");
-        initData();
+
         return contentView;
     }
 
