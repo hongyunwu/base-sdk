@@ -38,7 +38,7 @@ public abstract class BaseFragment<T extends BaseHolder> extends Fragment {
         if (contentView==null){
             contentView = inflater.inflate(getLayoutID(),null);
             try {
-                
+
                 viewHolder = generateViewHolder(contentView);
             }catch (Exception e){
                 e.printStackTrace();
