@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,10 +28,14 @@ import java.lang.reflect.ParameterizedType;
  * Created by wuhongyun on 17-7-17.
  */
 @BaseUI
-public abstract class BaseActivity<T extends BaseHolder> extends AppCompatActivity {
+public abstract class BaseActivity<T extends BaseHolder> extends AppCompatActivity implements Handler.Callback {
 
 
-    protected Handler mHandler = new Handler(Looper.getMainLooper());
+    /**
+     * 用于处理handler msg
+     */
+    protected Handler mHandler = new Handler(Looper.getMainLooper(),this);
+
     protected T viewHolder;
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -158,6 +163,8 @@ public abstract class BaseActivity<T extends BaseHolder> extends AppCompatActivi
         }
         Log.i("MainActivity","ondestroy...");
         EventBus.getDefault().unregister(this);
+        //移除所有handler回调
+        mHandler.removeCallbacksAndMessages(null);
     }
 
     /**
@@ -206,5 +213,18 @@ public abstract class BaseActivity<T extends BaseHolder> extends AppCompatActivi
             finish();
         }
 
+    }
+
+    /**
+     *
+     * @param msg
+     * @return
+     * @see  mHandler
+     */
+    @Override
+    public boolean handleMessage(Message msg) {
+
+
+        return true;
     }
 }
