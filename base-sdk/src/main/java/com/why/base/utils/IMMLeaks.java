@@ -1,11 +1,10 @@
-package com.why.base.ui;
+package com.why.base.utils;
 
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
 import android.support.annotation.RequiresApi;
@@ -18,16 +17,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import static android.content.Context.INPUT_METHOD_SERVICE;
-import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.KITKAT;
-
 /**
  * 输入法内存泄露
  */
 public class IMMLeaks {
 
-  static class ReferenceCleaner
+  public static class ReferenceCleaner
       implements MessageQueue.IdleHandler, View.OnAttachStateChangeListener,
       ViewTreeObserver.OnGlobalFocusChangeListener {
 
@@ -36,7 +31,7 @@ public class IMMLeaks {
     private final Field mServedViewField;
     private final Method finishInputLockedMethod;
 
-    ReferenceCleaner(InputMethodManager inputMethodManager, Field mHField, Field mServedViewField,
+    public ReferenceCleaner(InputMethodManager inputMethodManager, Field mHField, Field mServedViewField,
         Method finishInputLockedMethod) {
       this.inputMethodManager = inputMethodManager;
       this.mHField = mHField;
@@ -131,54 +126,4 @@ public class IMMLeaks {
     }
   }
 
-  /**
-   * Fix for https://code.google.com/p/android/issues/detail?id=171190 .
-   *
-   * When a view that has focus gets detached, we wait for the main thread to be idle and then
-   * check if the InputMethodManager is leaking a view. If yes, we tell it that the decor view got
-   * focus, which is what happens if you press home and come back from recent apps. This replaces
-   * the reference to the detached view with a reference to the decor view.
-   *
-   * Should be called from {@link Activity#onCreate(Bundle)} )}.
-   */
-  @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-  public static void fixFocusedViewLeak(Application application) {
-
-    // Don't know about other versions yet.
-    if (SDK_INT < KITKAT || SDK_INT > 22) {
-      return;
-    }
-
-    final InputMethodManager inputMethodManager =
-        (InputMethodManager) application.getSystemService(INPUT_METHOD_SERVICE);
-
-    final Field mServedViewField;
-    final Field mHField;
-    final Method finishInputLockedMethod;
-    final Method focusInMethod;
-    try {
-      mServedViewField = InputMethodManager.class.getDeclaredField("mServedView");
-      mServedViewField.setAccessible(true);
-      mHField = InputMethodManager.class.getDeclaredField("mServedView");
-      mHField.setAccessible(true);
-      finishInputLockedMethod = InputMethodManager.class.getDeclaredMethod("finishInputLocked");
-      finishInputLockedMethod.setAccessible(true);
-      focusInMethod = InputMethodManager.class.getDeclaredMethod("focusIn", View.class);
-      focusInMethod.setAccessible(true);
-    } catch (NoSuchMethodException | NoSuchFieldException unexpected) {
-      Log.e("IMMLeaks", "Unexpected reflection exception", unexpected);
-      return;
-    }
-
-    application.registerActivityLifecycleCallbacks(new LifecycleCallbacksAdapter() {
-      @Override public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        ReferenceCleaner cleaner =
-            new ReferenceCleaner(inputMethodManager, mHField, mServedViewField,
-                finishInputLockedMethod);
-        View rootView = activity.getWindow().getDecorView().getRootView();
-        ViewTreeObserver viewTreeObserver = rootView.getViewTreeObserver();
-        viewTreeObserver.addOnGlobalFocusChangeListener(cleaner);
-      }
-    });
-  }
 }

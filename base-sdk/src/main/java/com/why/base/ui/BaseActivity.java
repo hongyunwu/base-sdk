@@ -40,7 +40,6 @@ public abstract class BaseActivity<T extends BaseHolder> extends AppCompatActivi
         super.onCreate(savedInstanceState);
         View view = View.inflate(this, getLayoutID(), null);
         setContentView(view);
-        IMMLeaks.fixFocusedViewLeak(getApplication());
         EventBus.getDefault().register(this);
         viewHolder = generateViewHolder(view);
         /*if (savedInstanceState!=null)
