@@ -2,6 +2,9 @@ package com.why.base.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,11 +29,14 @@ import java.lang.reflect.ParameterizedType;
  * Created by wuhongyun on 17-7-17.
  */
 @BaseUI
-public abstract class BaseFragment<T extends BaseHolder> extends Fragment {
+public abstract class BaseFragment<T extends BaseHolder> extends Fragment implements Handler.Callback {
 
     protected T viewHolder;
     private View contentView;
-
+    /**
+     * 用于处理handler msg
+     */
+    protected Handler mHandler = new Handler(Looper.getMainLooper(),this);
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -164,6 +170,17 @@ public abstract class BaseFragment<T extends BaseHolder> extends Fragment {
             getActivity().finish();
         }
 
+    }
+    /**
+     *
+     * @param msg
+     * @return
+     */
+    @Override
+    public boolean handleMessage(Message msg) {
+
+
+        return true;
     }
 
 }
