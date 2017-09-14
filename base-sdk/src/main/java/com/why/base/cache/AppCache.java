@@ -7,6 +7,7 @@ import android.content.Context;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.why.base.executor.ThreadManager;
+import com.why.base.utils.PreferenceUtils;
 
 import java.util.ArrayList;
 
@@ -165,5 +166,22 @@ public class AppCache {
     public static void setBaseUrl(String baseUrl){
 
         getInstance().mBaseUrl = baseUrl;
+    }
+
+    /**
+     * 获取保存的key值
+     *
+     * @param key
+     * @param defaultValue
+     * @param <T>
+     * @return
+     */
+    public static <T extends Object> T getPreference(String key,T defaultValue) {
+        try {
+            return (T) PreferenceUtils.get(key,defaultValue);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return defaultValue;
     }
 }
