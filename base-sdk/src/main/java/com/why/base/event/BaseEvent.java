@@ -1,12 +1,13 @@
 package com.why.base.event;
 
+import org.greenrobot.greendao.annotation.Entity;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by wuhongyun on 17-8-28.
  * 作为eventbus时间的积累
  */
-
 public class BaseEvent<E> {
 
 
