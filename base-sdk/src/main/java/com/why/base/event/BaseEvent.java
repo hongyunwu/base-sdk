@@ -1,16 +1,22 @@
 package com.why.base.event;
 
-import org.greenrobot.greendao.annotation.Entity;
-
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by wuhongyun on 17-8-28.
  * 作为eventbus时间的积累
  */
+
 public class BaseEvent<E> {
 
+    public BaseEvent(E mEvent) {
+        this(mEvent,true);
+    }
 
+    public BaseEvent(E mEvent, boolean mAvailable){
+        this.mEvent = mEvent;
+        this.mAvailable = mAvailable;
+    }
     private static  AtomicInteger mAtomicInteger = new AtomicInteger(0);
     /**
      * 事件的code值，可以用于区分事件
@@ -22,6 +28,10 @@ public class BaseEvent<E> {
      */
     public E mEvent;
 
+    /**
+     * 事件的event是否可用
+     */
+    public boolean mAvailable;
     /**
      * 获取事件的code
      * @return code
