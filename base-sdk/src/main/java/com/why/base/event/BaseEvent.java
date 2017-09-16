@@ -1,5 +1,6 @@
 package com.why.base.event;
 
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -9,11 +10,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class BaseEvent<E> {
 
+
     public BaseEvent(E mEvent) {
         this(mEvent,true);
     }
-
-    public BaseEvent(E mEvent, boolean mAvailable){
+    public BaseEvent(E mEvent,boolean mAvailable){
         this.mEvent = mEvent;
         this.mAvailable = mAvailable;
     }
@@ -27,6 +28,16 @@ public class BaseEvent<E> {
      * 事件需要传输的对象
      */
     public E mEvent;
+
+    public boolean isAvailable() {
+
+        return mAvailable;
+    }
+
+    public BaseEvent setAvailable(boolean available) {
+        this.mAvailable = available;
+        return this;
+    }
 
     /**
      * 事件的event是否可用
