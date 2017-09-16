@@ -31,7 +31,7 @@ public class BaseEvent<E> {
 
     public boolean isAvailable() {
 
-        return mAvailable;
+        return mAvailable && (mEvent!=null);
     }
 
     public BaseEvent setAvailable(boolean available) {
