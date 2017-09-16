@@ -54,6 +54,7 @@ public class AppCache {
     private void onInit(Application application) {
         this.mApplication = application;
         CrashHandler.init(application);//全局捕获异常
+        ImageCache.init(application);
         initLeakCanary(application);//内存泄露检查
         mActicityLifeCycle = new ActicityLifeCycle(this);
         application.registerActivityLifecycleCallbacks(mActicityLifeCycle);//用于内存检测

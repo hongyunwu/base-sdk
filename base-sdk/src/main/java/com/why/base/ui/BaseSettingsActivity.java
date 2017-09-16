@@ -36,7 +36,7 @@ import java.lang.reflect.ParameterizedType;
  * Created by lenovo on 2017/9/15.
  *
  * Preference的file_name同PreferenceUtils类中的FILE_NAME一致
- * 
+ *
  * 在顶部填充一个toolbar
  */
 
