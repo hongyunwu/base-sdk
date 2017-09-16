@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="container" type="id">false</item>
+    <item name="tool_bar" type="id">false</item>
+</resources>
