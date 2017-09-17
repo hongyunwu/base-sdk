@@ -57,6 +57,7 @@ public class AppCache {
         ImageCache.init(application);
         initLeakCanary(application);//内存泄露检查
         mActicityLifeCycle = new ActicityLifeCycle(this);
+
         application.registerActivityLifecycleCallbacks(mActicityLifeCycle);//用于内存检测
 
     }

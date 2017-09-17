@@ -45,9 +45,10 @@ public class BaseEvent<E> {
     public boolean mAvailable;
     /**
      * 获取事件的code
+     *
      * @return code
      */
-    public int getEventCode(){
+    public synchronized int getEventCode(){
         if (mEventCode == -1){
             mEventCode = mAtomicInteger.incrementAndGet();
         }
