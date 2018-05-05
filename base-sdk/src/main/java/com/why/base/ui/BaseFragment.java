@@ -104,7 +104,7 @@ public abstract class BaseFragment<T extends BaseHolder> extends Fragment implem
         T t = null;
         Class clazz = generateT();
         try {
-            t = (T) clazz.getConstructors()[0].newInstance(view);
+            t = (T) (clazz.getConstructors()[0].newInstance(view));
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

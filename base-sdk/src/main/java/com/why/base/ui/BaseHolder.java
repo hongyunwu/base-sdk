@@ -22,9 +22,14 @@ public class BaseHolder extends RecyclerView.ViewHolder {
      * 此处使用butterKnife进行了view绑定操作
      * @param itemView
      */
-    public BaseHolder(View itemView) {
+    public BaseHolder(View itemView) throws Exception {
         super(itemView);
-        unbinder = ButterKnife.bind(this, itemView);
+        try {
+            unbinder = ButterKnife.bind(this, itemView);
+        }catch (Exception e){
+           throw new Exception("绑定view出错 baseholder->"+e.getMessage());
+        }
+
 
         //考虑到用法的兼容性，可以在此使用集合装载
 //        mViews = new SparseArray<>();
