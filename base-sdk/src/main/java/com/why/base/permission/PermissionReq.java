@@ -134,12 +134,18 @@ public class PermissionReq {
         }
 
         sResultArray.remove(requestCode);
+        //多次调用
+        ArrayList<String> deniedPermissions = new ArrayList<>();
 
-        for (int grantResult : grantResults) {
+        for (int i = 0; i < permissions.length;i++) {
+            int grantResult = grantResults[i];
             if (grantResult != PackageManager.PERMISSION_GRANTED) {
-                result.onDenied();
+                deniedPermissions.add(permissions[i]);
                 return;
             }
+        }
+        if (!deniedPermissions.isEmpty()){
+           result.onDenied();
         }
         result.onGranted();
     }
