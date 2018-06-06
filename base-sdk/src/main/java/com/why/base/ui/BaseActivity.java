@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.StrictMode;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ import java.lang.reflect.ParameterizedType;
 public abstract class BaseActivity<T extends BaseHolder> extends AppCompatActivity implements Handler.Callback {
 
 
+    private static final boolean DEBUG_MODE = true;
     /**
      * 用于处理handler msg
      */
@@ -41,7 +43,20 @@ public abstract class BaseActivity<T extends BaseHolder> extends AppCompatActivi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         //处理窗口的全屏，标题栏，状态栏等属性
-
+        if (DEBUG_MODE){
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()   // or .detectAll() for all detectable problems
+                    .penaltyLog()//将违规操作打印到日志中
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .penaltyLog()
+                    .penaltyDeath()//触发违规条件直接crash当前程序
+                    .build());
+        }
         super.onCreate(savedInstanceState);
         View view = View.inflate(this, getLayoutID(), null);
         setContentView(view);
