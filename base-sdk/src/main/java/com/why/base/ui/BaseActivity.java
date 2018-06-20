@@ -180,6 +180,7 @@ public abstract class BaseActivity<T extends BaseHolder> extends AppCompatActivi
         EventBus.getDefault().unregister(this);
         //移除所有handler回调
         mHandler.removeCallbacksAndMessages(null);
+     
     }
 
     /**

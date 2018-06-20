@@ -3,13 +3,16 @@ package com.why.base.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.why.base.enums.BaseUtil;
-
 /**
  * Created by wuhongyun on 17-7-18.
  * 可以不使用TAG的日志打印类，默认TAG为当前类名,
+ *
+ * 1.过滤掉log
+ adb shell am broadcast -a com.why.base.log.filter --es filter "package:<package>"
+
+ 2.显示log
+ adb shell am broadcast -a com.why.base.log.filter --es unFilter "package:<package>"
  */
-@BaseUtil
 public class LogUtils {
 
     public static final boolean SHOW_STACK_TRACE = false;
@@ -25,82 +28,101 @@ public class LogUtils {
     public static void v(String message) {
         if (LEVEL <= VERBOSE) {
             StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
-            String tag = getDefaultTag(stackTraceElement);
-            Log.v(tag, getLogInfo(stackTraceElement) + message);
+            if (!filter(stackTraceElement)) {
+                String tag = getDefaultTag(stackTraceElement);
+                Log.v(tag, getLogInfo(stackTraceElement) + message);
+            }
         }
     }
 
     public static void v(String tag, String message) {
         if (LEVEL <= VERBOSE) {
             StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
-            if (TextUtils.isEmpty(tag)) {
-                tag = getDefaultTag(stackTraceElement);
+
+            if (!filter(stackTraceElement)) {
+                if (TextUtils.isEmpty(tag)) {
+                    tag = getDefaultTag(stackTraceElement);
+                }
+                Log.v(tag, getLogInfo(stackTraceElement) + message);
             }
-            Log.v(tag, getLogInfo(stackTraceElement) + message);
         }
     }
 
     public static void d(String message) {
         if (LEVEL <= DEBUG) {
             StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
-            String tag = getDefaultTag(stackTraceElement);
-            Log.d(tag, getLogInfo(stackTraceElement) + message);
+            if (!filter(stackTraceElement)) {
+                String tag = getDefaultTag(stackTraceElement);
+                Log.d(tag, getLogInfo(stackTraceElement) + message);
+            }
         }
     }
 
     public static void d(String tag, String message) {
         if (LEVEL <= DEBUG) {
             StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
-            if (TextUtils.isEmpty(tag)) {
-                tag = getDefaultTag(stackTraceElement);
+            if (!filter(stackTraceElement)) {
+                if (TextUtils.isEmpty(tag)) {
+                    tag = getDefaultTag(stackTraceElement);
+                }
+                Log.d(tag, getLogInfo(stackTraceElement) + message);
             }
-            Log.d(tag, getLogInfo(stackTraceElement) + message);
         }
     }
 
     public static void i(String message) {
         if (LEVEL <= INFO) {
             StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
-            String tag = getDefaultTag(stackTraceElement);
-            Log.i(tag, getLogInfo(stackTraceElement) + message);
+            if (!filter(stackTraceElement)) {
+                String tag = getDefaultTag(stackTraceElement);
+                Log.i(tag, getLogInfo(stackTraceElement) + message);
+            }
         }
     }
 
     public static void i(String tag, String message) {
         if (LEVEL <= INFO) {
             StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
-            if (TextUtils.isEmpty(tag)) {
-                tag = getDefaultTag(stackTraceElement);
+            if (!filter(stackTraceElement)) {
+                if (TextUtils.isEmpty(tag)) {
+                    tag = getDefaultTag(stackTraceElement);
+                }
+                Log.i(tag, getLogInfo(stackTraceElement) + message);
             }
-            Log.i(tag, getLogInfo(stackTraceElement) + message);
         }
     }
 
     public static void w(String message) {
         if (LEVEL <= WARN) {
             StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
-            String tag = getDefaultTag(stackTraceElement);
-            Log.w(tag, getLogInfo(stackTraceElement) + message);
+            if (!filter(stackTraceElement)) {
+                String tag = getDefaultTag(stackTraceElement);
+                Log.w(tag, getLogInfo(stackTraceElement) + message);
+            }
         }
     }
 
     public static void w(String tag, String message) {
         if (LEVEL <= WARN) {
             StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
-            if (TextUtils.isEmpty(tag)) {
-                tag = getDefaultTag(stackTraceElement);
+            if (!filter(stackTraceElement)) {
+                if (TextUtils.isEmpty(tag)) {
+                    tag = getDefaultTag(stackTraceElement);
+                }
+                Log.w(tag, getLogInfo(stackTraceElement) + message);
             }
-            Log.w(tag, getLogInfo(stackTraceElement) + message);
         }
     }
 
     public static void e(String tag, String message) {
         if (LEVEL <= ERROR) {
             StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
-            if (TextUtils.isEmpty(tag)) {
-                tag = getDefaultTag(stackTraceElement);
+            if (!filter(stackTraceElement)) {
+                if (TextUtils.isEmpty(tag)) {
+                    tag = getDefaultTag(stackTraceElement);
+                }
+                Log.e(tag, getLogInfo(stackTraceElement) + message);
             }
-            Log.e(tag, getLogInfo(stackTraceElement) + message);
         }
     }
 
@@ -148,5 +170,11 @@ public class LogUtils {
         return "";
 
     }
+
+    private static boolean filter(StackTraceElement stackTraceElement){
+
+        return LogConfiguration.filter(stackTraceElement);
+    }
+
 
 }
